@@ -1,0 +1,67 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<!doctype html>
+<html lang="th">
+  <head>
+    <BaseHead title="ติดต่อเรา - Real Madrid News" description="ติดต่อทีมงานเว็บไซต์ข่าวเรอัล มาดริดสำหรับแฟนบอลไทย" />
+    <style>
+      main {
+        width: 960px;
+        margin: 0 auto;
+        padding: 2rem 0;
+      }
+      .hero {
+        text-align: center;
+        margin-bottom: 3rem;
+        padding: 2rem 0;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 12px;
+      }
+      .hero h1 {
+        font-size: 2.5rem;
+        margin: 0 0 1rem 0;
+        color: #1a1a1a;
+      }
+      .hero p {
+        font-size: 1.2rem;
+        color: #666;
+        margin: 0;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+      @media (max-width: 768px) {
+        main {
+          width: 100%;
+          padding: 1rem;
+        }
+        .hero h1 {
+          font-size: 2rem;
+        }
+        .hero p {
+          font-size: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class="hero">
+        <h1>ติดต่อเรา</h1>
+        <p>
+          หากคุณมีข้อเสนอแนะ ต้องการติดต่อทีมงาน หรือสนใจส่งบทความเกี่ยวกับเรอัล มาดริด กรุณาติดต่อเราทางอีเมลด้านล่างนี้
+        </p>
+        <p>
+          <strong>อีเมลสำหรับส่งบทความหรือสอบถาม:</strong> <a href="mailto:madridfootballinternational@gmail.com">madridfootballinternational@gmail.com</a>
+        </p>
+        <p>
+          ทีมงานยินดีรับฟังทุกความคิดเห็นและข้อเสนอแนะจากแฟนบอลทุกท่าน ขอบคุณที่ติดตามเว็บไซต์ของเรา!
+        </p>
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html> 

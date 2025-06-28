@@ -1,0 +1,27 @@
+name: Generate Real Madrid Content
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+    - run: npm ci
+    - run: node scripts/content-generator.js
+      env:
+        OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+    - run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action Bot"
+        git add .
+        git diff --staged --quiet || git commit -m "🤖 Auto-generate content"
+        git push 
