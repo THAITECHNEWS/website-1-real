@@ -2,31 +2,46 @@ name: Generate Real Madrid Content
 
 on:
   schedule:
-    - cron: '0 */6 * * *'  # Every 6 hours
-  workflow_dispatch: # Manual trigger
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 permissions:
   contents: write
+  actions: read
 
 jobs:
   generate-content:
     runs-on: ubuntu-latest
     
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/setup-node@v4
+        fetch-depth: 0
+        
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
-    - run: npm ci
-    - run: node scripts/content-generator.js
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Generate content
       env:
         OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-    - run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action Bot"
+      run: node scripts/content-generator.js
+      
+    - name: Commit and push
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add .
-        git diff --staged --quiet || git commit -m "🤖 Auto-generate content"
-        git push
+        if ! git diff --staged --quiet; then
+          git commit -m "🤖 Auto-generate Real Madrid content - $(date +'%Y-%m-%d %H:%M')"
+          git push
+        else
+          echo "No changes to commit"
+        fi
